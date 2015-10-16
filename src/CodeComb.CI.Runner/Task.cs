@@ -19,8 +19,8 @@ namespace CodeComb.CI.Runner
 
     public class Task
     {
-        private IRunnerProvider provider;
-        public Task(IRunnerProvider provider, string WorkingDirectory)
+        private IRunProvider provider;
+        public Task(IRunProvider provider, string WorkingDirectory)
         {
             this.provider = provider;
             Process = new Process();
