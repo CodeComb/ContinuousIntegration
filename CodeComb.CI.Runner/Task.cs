@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
 using System.Diagnostics;
 using CodeComb.Package;
 using CodeComb.CI.Runner.EventArgs;
@@ -37,7 +38,7 @@ namespace CodeComb.CI.Runner
                 RedirectStandardOutput = true,
                 RedirectStandardInput = true,
                 WorkingDirectory = WorkingDirectory,
-                UserName = provider.Username,
+                UserName = provider.UserName,
                 Password = provider.Password
             };
             foreach (var ev in provider.AdditionalEnvironmentVariables)
@@ -66,11 +67,13 @@ namespace CodeComb.CI.Runner
             {
                 if (OnOutputReceived != null)
                     OnOutputReceived(this, new OutputReceivedEventArgs { Output = args.Data });
+                Output += args.Data;
             };
             Process.Start();
             Process.WaitForExit(provider.MaxTimeLimit);
             if (Process.ExitCode == 0)
             {
+                Status = TaskStatus.Successful;
                 OnBuildSuccessful(this, new BuildSuccessfulArgs
                 {
                     ExitCode = Process.ExitCode,
@@ -81,6 +84,38 @@ namespace CodeComb.CI.Runner
                     Output = Output
                 });
             }
+            else if (Process.ExitCode == -1 && Process.UserProcessorTime.TotalMilliseconds >= provider.MaxTimeLimit)
+            {
+                Status = TaskStatus.Failed;
+                OnTimeLimitExceeded(this, new TimeLimitExceededArgs
+                {
+                    ExitCode = Process.ExitCode,
+                    StartTime = Process.StartTime,
+                    ExitTime = Process.ExitTime,
+                    PeakMemoryUsage = Process.PeakWorkingSet64,
+                    TimeUsage = Process.UserProcessorTime,
+                    Output = Output
+                });
+            }
+            else
+            {
+                Status = TaskStatus.Failed;
+                OnBuiledFailed(this, new BuildFailedArgs
+                {
+                    ExitCode = Process.ExitCode,
+                    StartTime = Process.StartTime,
+                    ExitTime = Process.ExitTime,
+                    PeakMemoryUsage = Process.PeakWorkingSet64,
+                    TimeUsage = Process.UserProcessorTime,
+                    Output = Output
+                });
+            }
+            Clean();
+        }
+
+        public void Clean()
+        {
+            Directory.Delete(WorkingDirectory, true);
         }
 
         public delegate void OutputReceivedHandle(object sender, OutputReceivedEventArgs args); 

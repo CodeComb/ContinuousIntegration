@@ -1,0 +1,17 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "CodeComb.CI.Publisher Class Library",
+  "authors": [ "Yuuko" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "dependencies": {
+    "CodeComb.Package": "2.0.0-t151013122943"
+  },
+
+  "frameworks": {
+    "dnx451": { },
+    "dnxcore50": { }
+  }
+}

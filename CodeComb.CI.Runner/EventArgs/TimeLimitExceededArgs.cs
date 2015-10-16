@@ -10,7 +10,7 @@ namespace CodeComb.CI.Runner.EventArgs
         public TimeSpan TimeUsage { get; set; }
         public string Output { get; set; }
         public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public DateTime ExitTime { get; set; }
         public long PeakMemoryUsage { get; set; }
         public int ExitCode { get; set; }
     }

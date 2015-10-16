@@ -7,15 +7,16 @@ using System.Security;
 
 namespace CodeComb.CI.Runner
 {
-    public interface IRunnerProvider
+    public interface IRunProvider
     {
         int MaxTimeLimit { get; set; }
-        string Username { get; set; }
+        string UserName { get; set; }
+        Task CurrentTask { get; set; }
         SecureString Password { get; set; }
         Queue<Task> TaskQueue { get; set; }
         int MaxThreads { get; set; }
         IDictionary<string, string> AdditionalEnvironmentVariables { get; set; }
-        void PushTask();
+        void PushTask(string Path, dynamic Identifier = null);
         void Polling();
     }
 }
