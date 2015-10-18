@@ -1,9 +1,12 @@
 ﻿{
-  "version": "1.0.0-*",
-  "description": "CodeComb.CI.Publisher Class Library",
-  "authors": [ "Yuuko" ],
-  "tags": [ "" ],
-  "projectUrl": "",
+  "title": "CodeComb.CI.Publisher",
+  "version": "2.0.0-*",
+  "description": "ASP.Net vNext CI Library",
+  "copyright": "Harbin Code Comb Technology Co.,Ltd",
+  "authors": [ "AmamiyaYuuko" ],
+  "tags": [ "Ffmpeg" ,"vNext", "ASP.Net", "MVC" ],
+  "iconUrl": "http://www.1234.sh/images/logo.png",
+  "projectUrl": "https://github.com/CodeComb/ContinuousIntegration",
   "licenseUrl": "",
 
   "dependencies": {

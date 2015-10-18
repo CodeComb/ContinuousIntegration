@@ -20,11 +20,23 @@ namespace CodeComb.CI.Runner
     public class Task
     {
         private ICIRunner provider;
+        private string FindDirectory(string path)
+        {
+            string[] files;
+            if (OS.Current == OSType.Windows)
+                files = Directory.GetFiles(path, "build.cmd");
+            else
+                files = Directory.GetFiles(path, "build.sh");
+            if (files.Count() == 0)
+                throw new FileNotFoundException();
+            return Path.GetDirectoryName(files.First());
+        }
+
         public Task(ICIRunner provider, string WorkingDirectory)
         {
             this.provider = provider;
             Process = new Process();
-            this.WorkingDirectory = WorkingDirectory;
+            this.WorkingDirectory = FindDirectory(WorkingDirectory);
             var fileName = "build.cmd";
             if (OS.Current != OSType.Windows)
             {

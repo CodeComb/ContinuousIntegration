@@ -7,6 +7,7 @@ namespace CodeComb.CI.Extractor
 {
     public interface ICIExtractor
     {
-
+        void Extract();
+        void Clean();
     }
 }
