@@ -42,6 +42,7 @@ namespace CodeComb.CI.Runner
             {
                 fileName = "build.sh";
             }
+
             Process.StartInfo = new ProcessStartInfo
             {
                 FileName = fileName,
@@ -49,10 +50,9 @@ namespace CodeComb.CI.Runner
                 RedirectStandardError = true,
                 RedirectStandardOutput = true,
                 RedirectStandardInput = true,
-                WorkingDirectory = WorkingDirectory,
-                UserName = provider.UserName,
-                Password = provider.Password
+                WorkingDirectory = WorkingDirectory
             };
+
             foreach (var ev in provider.AdditionalEnvironmentVariables)
             {
 #if DNXCORE50

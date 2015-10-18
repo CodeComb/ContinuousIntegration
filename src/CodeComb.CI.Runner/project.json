@@ -19,7 +19,8 @@
     "dnxcore50": {
       "dependencies": {
         "System.Threading.Timer": "4.0.1-*",
-        "System.Security.SecureString": "4.0.0-*"
+        "System.Security.SecureString": "4.0.0-*",
+        "System.Diagnostics.Process": "4.0.0-*"
       }
     }
   }

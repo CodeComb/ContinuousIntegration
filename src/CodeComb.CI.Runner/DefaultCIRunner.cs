@@ -10,13 +10,8 @@ namespace CodeComb.CI.Runner
 {
     public class DefaultCIRunner : ICIRunner
     {
-        public DefaultCIRunner(string UserName = null, string Password = null, int MaxThreads = 4, int MaxTimeLimit = 1000 * 60 * 20)
+        public DefaultCIRunner(int MaxThreads = 4, int MaxTimeLimit = 1000 * 60 * 20)
         {
-            this.UserName = UserName;
-            var ss = new SecureString();
-            foreach (var x in Password)
-                ss.AppendChar(x);
-            this.Password = ss;
             this.MaxThreads = MaxThreads;
             this.MaxTimeLimit = MaxTimeLimit;
         }
