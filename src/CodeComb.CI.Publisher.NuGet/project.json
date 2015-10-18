@@ -4,7 +4,7 @@
   "description": "ASP.Net vNext CI Library",
   "copyright": "Harbin Code Comb Technology Co.,Ltd",
   "authors": [ "AmamiyaYuuko" ],
-  "tags": [ "Ffmpeg" ,"vNext", "ASP.Net", "MVC" ],
+  "tags": [ "Ffmpeg" ,"vNext", "CI" ],
   "iconUrl": "http://www.1234.sh/images/logo.png",
   "projectUrl": "https://github.com/CodeComb/ContinuousIntegration",
   "licenseUrl": "",
