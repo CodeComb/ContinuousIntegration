@@ -8,9 +8,9 @@ using System.Text;
 
 namespace CodeComb.CI.Runner
 {
-    public class DefaultRunProvider : IRunProvider
+    public class DefaultCIRunner : ICIRunner
     {
-        public DefaultRunProvider(string UserName = null, string Password = null, int MaxThreads = 4, int MaxTimeLimit = 1000 * 60 * 20)
+        public DefaultCIRunner(string UserName = null, string Password = null, int MaxThreads = 4, int MaxTimeLimit = 1000 * 60 * 20)
         {
             this.UserName = UserName;
             var ss = new SecureString();

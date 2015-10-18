@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CodeComb.CI.Publisher
 {
-    public interface IPublishProvider
+    public interface ICIPublisher
     {
         void Publish();
     }

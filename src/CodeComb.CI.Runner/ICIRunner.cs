@@ -7,7 +7,7 @@ using System.Security;
 
 namespace CodeComb.CI.Runner
 {
-    public interface IRunProvider
+    public interface ICIRunner
     {
         int MaxTimeLimit { get; set; }
         string UserName { get; set; }

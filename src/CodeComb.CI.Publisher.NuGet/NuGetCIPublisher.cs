@@ -8,11 +8,11 @@ using CodeComb.Package;
 
 namespace CodeComb.CI.Publisher.NuGet
 {
-    public class NuGetPublishProvider : IPublishProvider
+    public class NuGetCIPublisher : ICIPublisher
     {
-        public NuGetPublishProvider() { }
+        public NuGetCIPublisher() { }
 
-        public NuGetPublishProvider(string path, string apiKey, string fileRules = "*.nupkg", string address = "https://www.nuget.org/")
+        public NuGetCIPublisher(string path, string apiKey, string fileRules = "*.nupkg", string address = "https://www.nuget.org/")
         {
             ApiKey = apiKey;
             FileRules = fileRules;
