@@ -10,7 +10,7 @@
   "licenseUrl": "",
 
   "dependencies": {
-    "CodeComb.CI.Publisher": "1.0.0-*",
+    "CodeComb.CI.Publisher": "2.0.0-*",
     "CodeComb.Package": "2.0.0-*"
   },
 

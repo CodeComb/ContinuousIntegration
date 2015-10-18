@@ -10,7 +10,7 @@
   "licenseUrl": "",
 
   "dependencies": {
-    "CodeComb.CI.Extractor": "1.0.0-*"
+    "CodeComb.CI.Extractor": "2.0.0-*"
   },
 
   "frameworks": {

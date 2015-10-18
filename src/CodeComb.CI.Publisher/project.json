@@ -10,7 +10,7 @@
   "licenseUrl": "",
 
   "dependencies": {
-    "CodeComb.Package": "2.0.0-t151013122943"
+    "CodeComb.Package": "2.0.0-*"
   },
    
   "frameworks": {
