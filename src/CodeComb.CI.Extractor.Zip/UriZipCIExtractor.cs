@@ -7,15 +7,16 @@ using CodeComb.Package;
 
 namespace CodeComb.CI.Extractor.Zip
 {
-    public class ZipCIExtractor : ICIExtractor
+    public class UriZipCIExtractor : ICIExtractor
     {
-        public ZipCIExtractor(string zipFile, string workingPath)
+        public UriZipCIExtractor() { }
+        public UriZipCIExtractor(string uri, string workingPath)
         {
-            ZipFile = zipFile;
+            Uri = uri;
             WorkingPath = workingPath;
         }
 
-        public string ZipFile { get; set; }
+        public string Uri { get; set; }
         public string WorkingPath { get; set; }
 
         public void Clean()
@@ -25,7 +26,7 @@ namespace CodeComb.CI.Extractor.Zip
 
         public void Extract()
         {
-            Unzip.ExtractAll(ZipFile, WorkingPath);
+            Download.DownloadAndExtractAll(Uri, WorkingPath);
         }
     }
 }

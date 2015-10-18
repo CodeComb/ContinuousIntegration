@@ -10,7 +10,7 @@
           "CodeComb.Package": "2.0.0"
         }
       },
-      "CodeComb.Package/2.0.0-t151018034034": {
+      "CodeComb.Package/2.0.0-t151018054723": {
         "type": "package",
         "dependencies": {
           "Microsoft.Dnx.Runtime": "1.0.0-rc1-15910",
@@ -348,7 +348,7 @@
           "CodeComb.Package": "2.0.0"
         }
       },
-      "CodeComb.Package/2.0.0-t151018034034": {
+      "CodeComb.Package/2.0.0-t151018054723": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.0.1-beta-23413",
@@ -1207,7 +1207,7 @@
           "CodeComb.Package": "2.0.0"
         }
       },
-      "CodeComb.Package/2.0.0-t151018034034": {
+      "CodeComb.Package/2.0.0-t151018054723": {
         "type": "package",
         "dependencies": {
           "Microsoft.Dnx.Runtime": "1.0.0-rc1-15910",
@@ -1550,7 +1550,7 @@
           "CodeComb.Package": "2.0.0"
         }
       },
-      "CodeComb.Package/2.0.0-t151018034034": {
+      "CodeComb.Package/2.0.0-t151018054723": {
         "type": "package",
         "dependencies": {
           "Microsoft.Dnx.Runtime": "1.0.0-rc1-15910",
@@ -1893,7 +1893,7 @@
           "CodeComb.Package": "2.0.0"
         }
       },
-      "CodeComb.Package/2.0.0-t151018034034": {
+      "CodeComb.Package/2.0.0-t151018054723": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.0.1-beta-23413",
@@ -3064,7 +3064,7 @@
           "CodeComb.Package": "2.0.0"
         }
       },
-      "CodeComb.Package/2.0.0-t151018034034": {
+      "CodeComb.Package/2.0.0-t151018054723": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.0.1-beta-23413",
@@ -4233,12 +4233,12 @@
       "type": "project",
       "path": "../CodeComb.CI.Publisher/project.json"
     },
-    "CodeComb.Package/2.0.0-t151018034034": {
+    "CodeComb.Package/2.0.0-t151018054723": {
       "type": "package",
-      "sha512": "/9S7t0CUmMzLNwBrjFaxDmPPphVs+qUXE59MQxr0qGWec5waLfUx0pBH6brxiyCGKqYrU3u3/2OWvUMUQ/voTQ==",
+      "sha512": "6TWFFinntcp7SYsJtZUPaolkRMMyG1jMn+uyRYBarB7nGIFAWm6fGu1X6itv5Vr36B2SE4LOJb5wJopf12M70Q==",
       "files": [
-        "CodeComb.Package.2.0.0-t151018034034.nupkg",
-        "CodeComb.Package.2.0.0-t151018034034.nupkg.sha512",
+        "CodeComb.Package.2.0.0-t151018054723.nupkg",
+        "CodeComb.Package.2.0.0-t151018054723.nupkg.sha512",
         "CodeComb.Package.nuspec",
         "lib/dnx451/CodeComb.Package.dll",
         "lib/dnx451/CodeComb.Package.xml",
