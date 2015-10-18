@@ -32,11 +32,11 @@ namespace CodeComb.CI.Runner
             return Path.GetDirectoryName(files.First());
         }
 
-        public Task(ICIRunner provider, string WorkingDirectory)
+        public Task(ICIRunner provider, string workingDirectory)
         {
             this.provider = provider;
             Process = new Process();
-            this.WorkingDirectory = FindDirectory(WorkingDirectory);
+            WorkingDirectory = FindDirectory(workingDirectory);
             var fileName = "build.cmd";
             if (OS.Current != OSType.Windows)
             {
