@@ -8,9 +8,9 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class DefaultRunnerExtension
     {
-        public IServiceCollection AddDefaultCIRunner(this IServiceCollection self,int MaxThreads = 4, int MaxTimeLimit = 1000 * 60 * 20)
+        public static IServiceCollection AddDefaultCIRunner(this IServiceCollection self,int MaxThreads = 4, int MaxTimeLimit = 1000 * 60 * 20)
         {
-            self.AddSingleton<ICIRunner>(x => new DefaultCIRunner(MaxThreads, MaxTimeLimit));
+            return self.AddSingleton<ICIRunner>(x => new DefaultCIRunner(MaxThreads, MaxTimeLimit));
         }
     }
 }
