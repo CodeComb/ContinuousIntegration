@@ -7,6 +7,7 @@ namespace CodeComb.CI.Publisher
 {
     public interface ICIPublisher
     {
-        void Publish();
+        void Publish(string path, string rules,string apikey, string host);
+        IList<string> Discover(string path, string rules);
     }
 }

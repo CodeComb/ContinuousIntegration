@@ -11,42 +11,26 @@ namespace CodeComb.CI.Publisher.NuGet
     public class NuGetCIPublisher : ICIPublisher
     {
         public NuGetCIPublisher() { }
-
-        public NuGetCIPublisher(string path, string apiKey, string fileRules = "*.nupkg", string address = "https://www.nuget.org/")
+        
+        public IList<string> Discover(string path,string rules)
         {
-            ApiKey = apiKey;
-            FileRules = fileRules;
-            Address = address;
-            Path = path;
+            return Directory.GetFiles(path, rules, SearchOption.AllDirectories).ToList();
         }
 
-        public string Address { get; set; }
-
-        public string ApiKey { get; set; }
-
-        public string FileRules { get; set; }
-
-        public string Path { get; set; }
-
-        public List<string> Discover()
+        public void Publish(string path, string rules, string apikey, string host)
         {
-            return Directory.GetFiles(Path, FileRules, SearchOption.AllDirectories).ToList();
-        }
-
-        public void Publish()
-        {
-            foreach(var x in Discover())
+            foreach(var x in Discover(path,rules))
             {
                 string fileName, arguments;
                 if (OS.Current == OSType.Windows)
                 {
                     fileName = "NuGet.exe";
-                    arguments = $"push {x} -s {Address} {ApiKey}";
+                    arguments = $"push {x} -s {host} {apikey}";
                 }
                 else
                 {
                     fileName = "mono";
-                    arguments = $"nuget.exe push {x} -s {Address} {ApiKey}";
+                    arguments = $"nuget.exe push {x} -s {host} {apikey}";
                 }
                 Process process = new Process();
                 process.StartInfo = new ProcessStartInfo
