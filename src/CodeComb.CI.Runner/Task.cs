@@ -24,9 +24,9 @@ namespace CodeComb.CI.Runner
         {
             string[] files;
             if (OS.Current == OSType.Windows)
-                files = Directory.GetFiles(path, "build.cmd");
+                files = Directory.GetFiles(path, "build.cmd", SearchOption.AllDirectories);
             else
-                files = Directory.GetFiles(path, "build.sh");
+                files = Directory.GetFiles(path, "build.sh", SearchOption.AllDirectories);
             if (files.Count() == 0)
                 throw new FileNotFoundException();
             return Path.GetDirectoryName(files.First());

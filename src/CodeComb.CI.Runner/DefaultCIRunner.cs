@@ -14,6 +14,7 @@ namespace CodeComb.CI.Runner
         {
             this.MaxThreads = MaxThreads;
             this.MaxTimeLimit = MaxTimeLimit;
+            Polling();
         }
 
         private bool Lock = false;
