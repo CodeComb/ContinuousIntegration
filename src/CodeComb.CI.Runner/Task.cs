@@ -37,22 +37,30 @@ namespace CodeComb.CI.Runner
             this.provider = provider;
             Process = new Process();
             WorkingDirectory = FindDirectory(workingDirectory);
-            var fileName = "build.cmd";
+            var fileName = "cmd.exe";
             if (OS.Current != OSType.Windows)
             {
-                fileName = "build.sh";
+                fileName = "bash";
+            }
+            var arguments = "/c build.cmd";
+            if (OS.Current != OSType.Windows)
+            {
+                arguments = "./build.sh";
             }
 
             Process.StartInfo = new ProcessStartInfo
             {
                 FileName = fileName,
+                Arguments = arguments,
                 UseShellExecute = false,
                 RedirectStandardError = true,
                 RedirectStandardOutput = true,
                 RedirectStandardInput = true,
                 WorkingDirectory = WorkingDirectory
             };
-
+            if (provider.AdditionalEnvironmentVariables == null)
+                provider.AdditionalEnvironmentVariables = new Dictionary<string, string>();
+                    
             foreach (var ev in provider.AdditionalEnvironmentVariables)
             {
 #if DNXCORE50
@@ -72,16 +80,18 @@ namespace CodeComb.CI.Runner
             Process.ErrorDataReceived += (sender, args) =>
             {
                 if (OnOutputReceived != null)
-                    OnOutputReceived(this, new OutputReceivedEventArgs { Output = args.Data });
-                Output += args.Data;
+                    OnOutputReceived(this, new OutputReceivedEventArgs { Output = args.Data + "\r\n" });
+                Output += args.Data + "\r\n";
             };
             Process.OutputDataReceived += (sender, args) =>
             {
                 if (OnOutputReceived != null)
-                    OnOutputReceived(this, new OutputReceivedEventArgs { Output = args.Data });
-                Output += args.Data;
+                    OnOutputReceived(this, new OutputReceivedEventArgs { Output = args.Data + "\r\n" });
+                Output += args.Data + "\r\n";
             };
             Process.Start();
+            Process.BeginOutputReadLine();
+            Process.BeginErrorReadLine();
             Process.WaitForExit(provider.MaxTimeLimit);
             if (Process.ExitCode == 0)
             {
@@ -117,7 +127,7 @@ namespace CodeComb.CI.Runner
                     ExitCode = Process.ExitCode,
                     StartTime = Process.StartTime,
                     ExitTime = Process.ExitTime,
-                    PeakMemoryUsage = Process.PeakWorkingSet64,
+                    PeakMemoryUsage = 0,
                     TimeUsage = Process.UserProcessorTime,
                     Output = Output
                 });
