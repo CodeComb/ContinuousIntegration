@@ -32,9 +32,11 @@ namespace CodeComb.CI.Runner
 
         public Task CurrentTask { get; set; }
 
+        private Timer Timer { get; set; }
+
         public void Polling()
         {
-            var timer = new Timer((obj)=> 
+            Timer = new Timer((obj)=> 
             {
                 if (Lock) return;
                 if (TaskQueue.Count > 0)
