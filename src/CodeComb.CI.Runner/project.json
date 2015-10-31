@@ -22,7 +22,7 @@
         "Microsoft.Extensions.DependencyInjection": "1.0.0-*"
       }
     },
-    "dotnet5.4": {
+    "dnxcore50": {
       "dependencies": {
         "Microsoft.CSharp": "4.0.1-*",
         "System.Collections": "4.0.11-*",
