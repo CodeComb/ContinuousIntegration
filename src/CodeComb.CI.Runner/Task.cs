@@ -96,7 +96,7 @@ namespace CodeComb.CI.Runner
         public TaskStatus Status { get; set; }
         public string Output { get; private set; }
 
-        public async void Run()
+        public void Run()
         {
             Process.Start();
             Process.BeginOutputReadLine();
