@@ -43,10 +43,10 @@ namespace CodeComb.CI.Runner
             {
                 fileName = "bash";
             }
-            var arguments = "/c build.cmd";
+            var arguments = "/c \"build.cmd\"";
             if (OS.Current != OSType.Windows)
             {
-                arguments = "./build.sh";
+                arguments = "-c \"./build.sh\"";
             }
 
             Process.StartInfo = new ProcessStartInfo
@@ -56,12 +56,11 @@ namespace CodeComb.CI.Runner
                 UseShellExecute = false,
                 RedirectStandardError = true,
                 RedirectStandardOutput = true,
-                RedirectStandardInput = true,
                 WorkingDirectory = WorkingDirectory
             };
 
+            /*
             var sysenv = Environment.GetEnvironmentVariables();
-
             foreach(dynamic ev in sysenv)
             {
 #if DNXCORE50 || DOTNET5_4
@@ -76,6 +75,7 @@ namespace CodeComb.CI.Runner
                     Process.StartInfo.EnvironmentVariables.Add(ev.Key, ev.Value);
 #endif
             }
+            */
 
             if (provider.AdditionalEnvironmentVariables == null)
                 provider.AdditionalEnvironmentVariables = new Dictionary<string, string>();
