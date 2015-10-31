@@ -10,11 +10,9 @@ namespace CodeComb.CI.Runner
     public interface ICIRunner
     {
         int MaxTimeLimit { get; set; }
-        Task CurrentTask { get; set; }
-        Queue<Task> TaskQueue { get; set; }
+        int CurrentThreads { get; set; }
         int MaxThreads { get; set; }
         IDictionary<string, string> AdditionalEnvironmentVariables { get; set; }
         void PushTask(string Path, dynamic Identifier = null);
-        void Polling();
     }
 }

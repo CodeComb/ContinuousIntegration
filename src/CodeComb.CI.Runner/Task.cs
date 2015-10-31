@@ -144,6 +144,7 @@ namespace CodeComb.CI.Runner
                     });
                 }
                 Clean();
+                provider.CurrentThreads = provider.CurrentThreads - 1;
             });
         }
 

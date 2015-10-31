@@ -14,10 +14,7 @@ namespace CodeComb.CI.Runner
         {
             this.MaxThreads = MaxThreads;
             this.MaxTimeLimit = MaxTimeLimit;
-            Polling();
         }
-
-        private bool Lock = false;
 
         public IDictionary<string, string> AdditionalEnvironmentVariables { get; set; }
 
@@ -27,36 +24,30 @@ namespace CodeComb.CI.Runner
 
         public SecureString Password { get; set; }
 
-        public Queue<Task> TaskQueue { get; set; } = new Queue<Task>();
-
         public string UserName { get; set; }
 
-        public Task CurrentTask { get; set; }
+        public static int _CurrentThreads { get; set; } = 0;
+
+        public int CurrentThreads
+        {
+            get { return _CurrentThreads; }
+            set { _CurrentThreads = value; }
+        }
 
         private Timer Timer { get; set; }
 
-        public void Polling()
-        {
-            Timer = new Timer((obj)=> 
-            {
-                if (Lock) return;
-                if (TaskQueue.Count > 0)
-                {
-                    Lock = true;
-                    System.Threading.Tasks.Task.Factory.StartNew(() =>
-                    {
-                        CurrentTask = TaskQueue.Dequeue();
-                        CurrentTask.Run();
-                        Lock = false;
-                    });
-                }
-            }, this, 0, 5000);
-        }
-
         public void PushTask(string Path, dynamic Identifier = null)
         {
-            var task = new Task(this, Path) { Identifier = Identifier };
-            TaskQueue.Enqueue(task);
+            System.Threading.Tasks.Task.Factory.StartNew(() =>
+            {
+                while (CurrentThreads >= MaxThreads)
+                {
+                    Thread.Sleep(500);
+                }
+                _CurrentThreads++;
+                var task = new Task(this, Path) { Identifier = Identifier };
+                task.Run();
+            });
         }
     }
 }
