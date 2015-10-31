@@ -78,15 +78,15 @@ namespace CodeComb.CI.Runner
 #endif
                 Process.ErrorDataReceived += (sender, args) =>
                 {
+                    Output += args.Data + "\r\n";
                     if (OnOutputReceived != null)
                         OnOutputReceived(this, new OutputReceivedEventArgs { Output = args.Data + "\r\n" });
-                    Output += args.Data + "\r\n";
                 };
                 Process.OutputDataReceived += (sender, args) =>
                 {
+                    Output += args.Data + "\r\n";
                     if (OnOutputReceived != null)
                         OnOutputReceived(this, new OutputReceivedEventArgs { Output = args.Data + "\r\n" });
-                    Output += args.Data + "\r\n";
                 };
             }
         }
