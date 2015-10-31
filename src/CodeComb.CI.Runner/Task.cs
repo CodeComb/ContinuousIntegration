@@ -98,54 +98,51 @@ namespace CodeComb.CI.Runner
 
         public async void Run()
         {
-            await System.Threading.Tasks.Task.Factory.StartNew(() =>
+            Process.Start();
+            Process.BeginOutputReadLine();
+            Process.BeginErrorReadLine();
+            Process.WaitForExit(provider.MaxTimeLimit);
+            if (Process.ExitCode == 0)
             {
-                Process.Start();
-                Process.BeginOutputReadLine();
-                Process.BeginErrorReadLine();
-                Process.WaitForExit(provider.MaxTimeLimit);
-                if (Process.ExitCode == 0)
+                Status = TaskStatus.Successful;
+                OnBuildSuccessful(this, new BuildSuccessfulArgs
                 {
-                    Status = TaskStatus.Successful;
-                    OnBuildSuccessful(this, new BuildSuccessfulArgs
-                    {
-                        ExitCode = Process.ExitCode,
-                        StartTime = Process.StartTime,
-                        ExitTime = Process.ExitTime,
-                        PeakMemoryUsage = Process.PeakWorkingSet64,
-                        TimeUsage = Process.UserProcessorTime,
-                        Output = Output
-                    });
-                }
-                else if (Process.ExitCode == -1 && Process.UserProcessorTime.TotalMilliseconds >= provider.MaxTimeLimit)
+                    ExitCode = Process.ExitCode,
+                    StartTime = Process.StartTime,
+                    ExitTime = Process.ExitTime,
+                    PeakMemoryUsage = Process.PeakWorkingSet64,
+                    TimeUsage = Process.UserProcessorTime,
+                    Output = Output
+                });
+            }
+            else if (Process.ExitCode == -1 && Process.UserProcessorTime.TotalMilliseconds >= provider.MaxTimeLimit)
+            {
+                Status = TaskStatus.Failed;
+                OnTimeLimitExceeded(this, new TimeLimitExceededArgs
                 {
-                    Status = TaskStatus.Failed;
-                    OnTimeLimitExceeded(this, new TimeLimitExceededArgs
-                    {
-                        ExitCode = Process.ExitCode,
-                        StartTime = Process.StartTime,
-                        ExitTime = Process.ExitTime,
-                        PeakMemoryUsage = Process.PeakWorkingSet64,
-                        TimeUsage = Process.UserProcessorTime,
-                        Output = Output
-                    });
-                }
-                else
+                    ExitCode = Process.ExitCode,
+                    StartTime = Process.StartTime,
+                    ExitTime = Process.ExitTime,
+                    PeakMemoryUsage = Process.PeakWorkingSet64,
+                    TimeUsage = Process.UserProcessorTime,
+                    Output = Output
+                });
+            }
+            else
+            {
+                Status = TaskStatus.Failed;
+                OnBuiledFailed(this, new BuildFailedArgs
                 {
-                    Status = TaskStatus.Failed;
-                    OnBuiledFailed(this, new BuildFailedArgs
-                    {
-                        ExitCode = Process.ExitCode,
-                        StartTime = Process.StartTime,
-                        ExitTime = Process.ExitTime,
-                        PeakMemoryUsage = 0,
-                        TimeUsage = Process.UserProcessorTime,
-                        Output = Output
-                    });
-                }
-                Clean();
-                provider.CurrentThreads = provider.CurrentThreads - 1;
-            });
+                    ExitCode = Process.ExitCode,
+                    StartTime = Process.StartTime,
+                    ExitTime = Process.ExitTime,
+                    PeakMemoryUsage = 0,
+                    TimeUsage = Process.UserProcessorTime,
+                    Output = Output
+                });
+            }
+            Clean();
+            provider.CurrentThreads = provider.CurrentThreads - 1;
         }
 
         public void Clean()

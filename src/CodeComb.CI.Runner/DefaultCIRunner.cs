@@ -38,6 +38,8 @@ namespace CodeComb.CI.Runner
 
         public void PushTask(string Path, dynamic Identifier = null)
         {
+            if (Identifier == null)
+                Identifier = Guid.NewGuid().ToString();
             System.Threading.Tasks.Task.Factory.StartNew(() =>
             {
                 while (CurrentThreads >= MaxThreads)
