@@ -101,7 +101,9 @@ namespace CodeComb.CI.Runner
             Process.Start();
             Process.BeginOutputReadLine();
             Process.BeginErrorReadLine();
-            Process.WaitForExit(provider.MaxTimeLimit);
+            var flag = Process.WaitForExit(provider.MaxTimeLimit);
+            if (!flag)
+                Process.Kill();
             if (Process.ExitCode == 0)
             {
                 Status = TaskStatus.Successful;
@@ -115,7 +117,7 @@ namespace CodeComb.CI.Runner
                     Output = Output
                 });
             }
-            else if (Process.ExitCode == -1 && Process.UserProcessorTime.TotalMilliseconds >= provider.MaxTimeLimit)
+            else if (!flag)
             {
                 Status = TaskStatus.Failed;
                 OnTimeLimitExceeded(this, new TimeLimitExceededArgs
