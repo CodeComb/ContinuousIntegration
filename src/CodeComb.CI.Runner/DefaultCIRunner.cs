@@ -43,9 +43,12 @@ namespace CodeComb.CI.Runner
                 if (TaskQueue.Count > 0)
                 {
                     Lock = true;
-                    CurrentTask = TaskQueue.Dequeue();
-                    CurrentTask.Run();
-                    Lock = false;
+                    System.Threading.Tasks.Task.Factory.StartNew(() =>
+                    {
+                        CurrentTask = TaskQueue.Dequeue();
+                        CurrentTask.Run();
+                        Lock = false;
+                    });
                 }
             }, this, 0, 5000);
         }

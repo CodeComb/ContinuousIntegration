@@ -37,7 +37,8 @@ namespace CodeComb.CI.Runner
         {
             this.provider = provider;
             Process = new Process();
-            WorkingDirectory = FindDirectory(workingDirectory);
+            workingDirectory = FindDirectory(workingDirectory);
+            this.WorkingDirectory = workingDirectory;
             var fileName = "cmd.exe";
             if (OS.Current != OSType.Windows)
             {
@@ -56,26 +57,8 @@ namespace CodeComb.CI.Runner
                 UseShellExecute = false,
                 RedirectStandardError = true,
                 RedirectStandardOutput = true,
-                WorkingDirectory = WorkingDirectory
+                WorkingDirectory = workingDirectory
             };
-
-            /*
-            var sysenv = Environment.GetEnvironmentVariables();
-            foreach(dynamic ev in sysenv)
-            {
-#if DNXCORE50 || DOTNET5_4
-                if (Process.StartInfo.Environment[ev.Key] != null)
-                    Process.StartInfo.Environment[ev.Key] = Process.StartInfo.Environment[ev.Key].TrimEnd(' ').TrimEnd(';') + ";" + ev.Value;
-                else
-                    Process.StartInfo.Environment.Add(ev.Key, ev.Value);
-#else
-                if (Process.StartInfo.EnvironmentVariables[ev.Key] != null)
-                    Process.StartInfo.EnvironmentVariables[ev.Key] = Process.StartInfo.EnvironmentVariables[ev.Key].TrimEnd(' ').TrimEnd(';') + ";" + ev.Value;
-                else
-                    Process.StartInfo.EnvironmentVariables.Add(ev.Key, ev.Value);
-#endif
-            }
-            */
 
             if (provider.AdditionalEnvironmentVariables == null)
                 provider.AdditionalEnvironmentVariables = new Dictionary<string, string>();
@@ -93,6 +76,18 @@ namespace CodeComb.CI.Runner
                 else
                     Process.StartInfo.EnvironmentVariables.Add(ev.Key, ev.Value);
 #endif
+                Process.ErrorDataReceived += (sender, args) =>
+                {
+                    if (OnOutputReceived != null)
+                        OnOutputReceived(this, new OutputReceivedEventArgs { Output = args.Data + "\r\n" });
+                    Output += args.Data + "\r\n";
+                };
+                Process.OutputDataReceived += (sender, args) =>
+                {
+                    if (OnOutputReceived != null)
+                        OnOutputReceived(this, new OutputReceivedEventArgs { Output = args.Data + "\r\n" });
+                    Output += args.Data + "\r\n";
+                };
             }
         }
         public dynamic Identifier { get; set; }
@@ -100,20 +95,9 @@ namespace CodeComb.CI.Runner
         public Process Process { get; set; }
         public TaskStatus Status { get; set; }
         public string Output { get; private set; }
+
         public void Run()
         {
-            Process.ErrorDataReceived += (sender, args) =>
-            {
-                if (OnOutputReceived != null)
-                    OnOutputReceived(this, new OutputReceivedEventArgs { Output = args.Data + "\r\n" });
-                Output += args.Data + "\r\n";
-            };
-            Process.OutputDataReceived += (sender, args) =>
-            {
-                if (OnOutputReceived != null)
-                    OnOutputReceived(this, new OutputReceivedEventArgs { Output = args.Data + "\r\n" });
-                Output += args.Data + "\r\n";
-            };
             Process.Start();
             Process.BeginOutputReadLine();
             Process.BeginErrorReadLine();
