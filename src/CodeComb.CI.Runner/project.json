@@ -10,18 +10,24 @@
   "licenseUrl": "",
 
   "dependencies": {
-    "Microsoft.Extensions.DependencyInjection": "1.0.0-*",
     "CodeComb.Package": "2.0.0-*"
   },
 
   "frameworks": {
     "net45": { },
-    "dnx451": { },
+    "net451": { },
+    "net46": { },
+    "dnx451": { 
+      "dependencies": {
+        "Microsoft.Extensions.DependencyInjection": "1.0.0-*"
+      }
+    },
     "dotnet5.4": {
       "dependencies": {
         "System.Threading.Timer": "4.0.1-*",
         "System.Security.SecureString": "4.0.0-*",
-        "System.Diagnostics.Process": "4.0.0-*"
+        "System.Diagnostics.Process": "4.0.0-*",
+        "Microsoft.Extensions.DependencyInjection": "1.0.0-*"
       }
     }
   }
