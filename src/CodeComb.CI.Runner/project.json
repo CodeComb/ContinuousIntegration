@@ -14,15 +14,12 @@
   },
 
   "frameworks": {
-    "net45": { },
-    "net451": { },
-    "net46": { },
-    "dnx451": { 
+    "net451": { 
       "dependencies": {
         "Microsoft.Extensions.DependencyInjection": "1.0.0-*"
       }
     },
-    "dnxcore50": {
+    "dotnet5.4": {
       "dependencies": {
         "Microsoft.CSharp": "4.0.1-*",
         "System.Collections": "4.0.11-*",
