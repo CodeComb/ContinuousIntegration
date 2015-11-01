@@ -30,7 +30,7 @@ namespace CodeComb.CI.Runner
 
             this.Timer = new Timer((x) => 
             {
-                if (Lock || WaitingTasks.Count == 0) return;
+                if (WaitingTasks.Count == 0 || CurrentTasks.Count >= MaxThreads) return;
                 CurrentTasks.Add(WaitingTasks.Dequeue());
                 foreach(var z in CurrentTasks.Where(y => y.Status == CITaskStatus.Queued))
                     Task.Factory.StartNew(() =>
@@ -60,6 +60,5 @@ namespace CodeComb.CI.Runner
         public int MaxTimeLimit { get; private set; }
         public List<CITask> CurrentTasks { get; set; } = new List<CITask>();
         public Queue<CITask> WaitingTasks { get; set; } = new Queue<CITask>();
-        private bool Lock = false;
     }
 }
