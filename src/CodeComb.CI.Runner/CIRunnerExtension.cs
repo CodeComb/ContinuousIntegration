@@ -1,5 +1,4 @@
-﻿#if DNX451 || DOTNET5_4 || DNXCORE50
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,4 +14,3 @@ namespace Microsoft.Extensions.DependencyInjection
         }
     }
 }
-#endif
