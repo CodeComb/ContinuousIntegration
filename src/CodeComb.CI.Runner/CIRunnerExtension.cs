@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddCIRunner(this IServiceCollection self,int MaxThreads = 4, int MaxTimeLimit = 1000 * 60 * 20)
         {
-            return self.AddInstance(new CIRunner(MaxThreads, MaxTimeLimit));
+            return self.AddSingleton(new CIRunner(MaxThreads, MaxTimeLimit));
         }
     }
 }
